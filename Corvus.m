@@ -31,7 +31,7 @@ static Corvus *sharedInstance;
   if (logMsg) {
 
     RavenLogLevel ravenLevel = kRavenLogLevelDebug;
-    switch (logMessage->logLevel) {
+    switch (logMessage->logFlag) {
     case LOG_FLAG_ERROR:
       ravenLevel = kRavenLogLevelDebugError;
       break;
