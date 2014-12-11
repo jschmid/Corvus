@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Corvus"
-  s.version      = "1.0.0"
+  s.version      = "2.0.0-rc"
   s.summary      = "Log to Sentry/Raven using CocoaLumberjack"
   s.homepage     = "https://github.com/jschmid/Corvus"
   s.license      = 'MIT'
@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
   s.source_files = '*.{h,m}'
   s.requires_arc = true
   s.platform = :ios, '7.0'
-  s.dependency 'CocoaLumberjack/Core', '~> 1.9'
+  s.dependency 'CocoaLumberjack/Core', '=2.0.0-rc'
   s.dependency 'Raven'
 end

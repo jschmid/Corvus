@@ -5,7 +5,7 @@
 //  Copyright (c) 2014 schmid. All rights reserved.
 //
 
-#import "DDLog.h"
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
 @interface Corvus : DDAbstractLogger
 
