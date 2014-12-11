@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Corvus"
-  s.version      = "1.0.0-rc2"
+  s.version      = "1.0.0"
   s.summary      = "Log to Sentry/Raven using CocoaLumberjack"
   s.homepage     = "https://github.com/jschmid/Corvus"
   s.license      = 'MIT'
