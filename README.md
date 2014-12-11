@@ -18,17 +18,35 @@ it, simply add the following line to your Podfile:
 
 ## Usage
 
+### Make sure Raven is configured
+
+If you don't have it already, import Raven:
+
+    #import "RavenClient.h"
+    
+Setup the client in `application:didFinishLaunchingWithOptions:`:
+
+    [RavenClient clientWithDSN:SENTRY_DSN];
+    
+### Setup Corvus
+
 Import the category:
 
 	#import "Corvus.h"
 
-Add the logger like the others:
+Add the logger like the others (also in `application:didFinishLaunchingWithOptions:`):
 
     [DDLog addLogger:[Corvus sharedInstance]];
 
 If you only want warnings and errors in Sentry, add a log level filter:
 
     [DDLog addLogger:[Corvus sharedInstance] withLogLevel:LOG_LEVEL_WARN];
+    
+### Log something...
+
+    DDLogError(@"Error while setting up Core Data");
+
+...and you should see it in Sentry!
 
 ## Author
 
