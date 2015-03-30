@@ -7,7 +7,8 @@
 
 Log to [Sentry](https://getsentry.com/)/[Raven](https://github.com/getsentry/raven-objc) using [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
 
-Version 1.0 works with CocoaLumberjack version 1.9.2.
+* Version 1.0 works with CocoaLumberjack version 1.9.2.
+* Version 2.0 works with CocoaLumberjack version 2.0.0.
 
 ## Installation
 
@@ -26,7 +27,10 @@ If you don't have it already, import Raven:
     
 Setup the client in `application:didFinishLaunchingWithOptions:`:
 
-    [RavenClient clientWithDSN:SENTRY_DSN];
+    RavenClient *client = [RavenClient clientWithDSN:SENTRY_DSN];
+    [RavenClient setSharedClient:client];
+    
+It is important to set the shared client as Corvus uses it to log messages.
     
 ### Setup Corvus
 
@@ -40,7 +44,7 @@ Add the logger like the others (also in `application:didFinishLaunchingWithOptio
 
 If you only want warnings and errors in Sentry, add a log level filter:
 
-    [DDLog addLogger:[Corvus sharedInstance] withLogLevel:LOG_LEVEL_WARN];
+    [DDLog addLogger:[Corvus sharedInstance] withLevel:DDLogLevelWarning];
     
 ### Log something...
 

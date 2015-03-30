@@ -22,33 +22,33 @@ static Corvus *sharedInstance;
 }
 
 - (void)logMessage:(DDLogMessage *)logMessage {
-  NSString *logMsg = logMessage->logMsg;
+  NSString *logMsg = logMessage->_message;
 
-  if (formatter) {
-    logMsg = [formatter formatLogMessage:logMessage];
+  if (_logFormatter) {
+    logMsg = [_logFormatter formatLogMessage:logMessage];
   }
 
   if (logMsg) {
 
     RavenLogLevel ravenLevel = kRavenLogLevelDebug;
-    switch (logMessage->logFlag) {
-    case LOG_FLAG_ERROR:
+    switch (logMessage->_flag) {
+    case DDLogFlagError:
       ravenLevel = kRavenLogLevelDebugError;
       break;
 
-    case LOG_FLAG_WARN:
+    case DDLogFlagWarning:
       ravenLevel = kRavenLogLevelDebugWarning;
       break;
 
-    case LOG_FLAG_INFO:
+    case DDLogFlagInfo:
       ravenLevel = kRavenLogLevelDebugInfo;
       break;
 
-    case LOG_FLAG_DEBUG:
+    case DDLogFlagDebug:
       ravenLevel = kRavenLogLevelDebug;
       break;
 
-    case LOG_FLAG_VERBOSE:
+    case DDLogFlagVerbose:
       ravenLevel = kRavenLogLevelDebug;
       break;
 
@@ -58,9 +58,9 @@ static Corvus *sharedInstance;
 
     [[RavenClient sharedClient] captureMessage:logMsg
                                          level:ravenLevel
-                                        method:logMessage->function
-                                          file:logMessage->file
-                                          line:logMessage->lineNumber];
+                                        method:[logMessage->_function UTF8String]
+                                          file:[logMessage->_fileName UTF8String]
+                                          line:logMessage->_line];
   }
 }
 
