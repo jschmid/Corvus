@@ -7,7 +7,7 @@
 
 #import "Corvus.h"
 
-#import "RavenClient.h"
+@import SentrySwift;
 
 @implementation Corvus
 
@@ -21,6 +21,19 @@ static Corvus *sharedInstance;
   return sharedInstance;
 }
 
+- (Stacktrace *)buildStacktrace:(DDLogMessage *)logMessage {
+  // NSArray<NSString *> *symbols = [NSThread callStackSymbols];
+  // TODO parse the actual symbols[c] string, if we're able to get the real ones
+  // TODO as opposed to the worker thread stack we get here :(
+  NSMutableArray<Frame *> *frames = [NSMutableArray array];
+  [frames addObject:[[Frame alloc] initWithFile:logMessage.fileName
+                                       function:logMessage.function
+                                         module:nil
+                                           line:logMessage.line]];
+  NSArray<Frame *> *immutableFrames = [NSArray arrayWithArray:frames];
+  return [[Stacktrace alloc] initWithFrames:immutableFrames];
+}
+
 - (void)logMessage:(DDLogMessage *)logMessage {
   NSString *logMsg = logMessage->_message;
 
@@ -28,39 +41,51 @@ static Corvus *sharedInstance;
     logMsg = [_logFormatter formatLogMessage:logMessage];
   }
 
+  Stacktrace *stacktrace = [self buildStacktrace:logMessage];
   if (logMsg) {
 
-    RavenLogLevel ravenLevel = kRavenLogLevelDebug;
+    SentryLog sentryLogLevel = SentryLogNone;
     switch (logMessage->_flag) {
     case DDLogFlagError:
-      ravenLevel = kRavenLogLevelDebugError;
+      sentryLogLevel = SentryLogError;
       break;
 
     case DDLogFlagWarning:
-      ravenLevel = kRavenLogLevelDebugWarning;
+      sentryLogLevel = SentryLogDebug;
       break;
 
     case DDLogFlagInfo:
-      ravenLevel = kRavenLogLevelDebugInfo;
+      sentryLogLevel = SentryLogDebug;
       break;
 
     case DDLogFlagDebug:
-      ravenLevel = kRavenLogLevelDebug;
+      sentryLogLevel = SentryLogDebug;
       break;
 
     case DDLogFlagVerbose:
-      ravenLevel = kRavenLogLevelDebug;
+      sentryLogLevel = SentryLogDebug;
       break;
 
     default:
       break;
     }
 
-    [[RavenClient sharedClient] captureMessage:logMsg
-                                         level:ravenLevel
-                                        method:[logMessage->_function UTF8String]
-                                          file:[logMessage->_fileName UTF8String]
-                                          line:logMessage->_line];
+    Event *event = [[Event alloc] init:logMsg
+                             timestamp:[NSDate date]
+                                 level:sentryLogLevel
+                                logger:nil
+                               culprit:nil
+                            serverName:nil
+                               release:nil
+                                  tags:nil
+                               modules:nil
+                                 extra:nil
+                           fingerprint:nil
+                                  user:nil
+                             exception:nil
+                            stacktrace:stacktrace
+                      appleCrashReport:nil];
+    [[SentryClient shared] captureEvent:event];
   }
 }
 
