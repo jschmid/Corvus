@@ -9,7 +9,7 @@ Log to [Sentry](https://getsentry.com/) using [CocoaLumberjack](https://github.c
 
 * Version 1.0 works with CocoaLumberjack version 1.9.2 and [Raven](https://github.com/getsentry/raven-swift).
 * Version 2.0 works with CocoaLumberjack version 2.0.0 and [Raven](https://github.com/getsentry/raven-swift).
-* Version 2.1 works with CocoaLumberjack version 2.0.0 and [SentrySwift](https://github.com/getsentry/sentry-swift) version 0.3.3.
+* Version 3.0 works with CocoaLumberjack version 2.0.0 and [SentrySwift](https://github.com/getsentry/sentry-swift) version 0.3.3.
 
 ## Installation
 
