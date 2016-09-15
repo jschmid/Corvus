@@ -5,10 +5,11 @@
 [![License](https://img.shields.io/cocoapods/l/Corvus.svg?style=flat)](http://cocoadocs.org/docsets/Corvus)
 [![Platform](https://img.shields.io/cocoapods/p/Corvus.svg?style=flat)](http://cocoadocs.org/docsets/Corvus)
 
-Log to [Sentry](https://getsentry.com/)/[Raven](https://github.com/getsentry/raven-objc) using [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
+Log to [Sentry](https://getsentry.com/) using [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
 
-* Version 1.0 works with CocoaLumberjack version 1.9.2.
-* Version 2.0 works with CocoaLumberjack version 2.0.0.
+* Version 1.0 works with CocoaLumberjack version 1.9.2 and [Raven](https://github.com/getsentry/raven-swift).
+* Version 2.0 works with CocoaLumberjack version 2.0.0 and [Raven](https://github.com/getsentry/raven-swift).
+* Version 3.0 works with CocoaLumberjack version 2.0.0 and [SentrySwift](https://github.com/getsentry/sentry-swift) version 0.3.3.
 
 ## Installation
 
@@ -19,16 +20,16 @@ it, simply add the following line to your Podfile:
 
 ## Usage
 
-### Make sure Raven is configured
+### Make sure SwiftSentry is configured
 
-If you don't have it already, import Raven:
+If you don't have it already, import SwiftSentry:
 
-    #import "RavenClient.h"
+    #import "SentryClient.h"
     
 Setup the client in `application:didFinishLaunchingWithOptions:`:
 
-    RavenClient *client = [RavenClient clientWithDSN:SENTRY_DSN];
-    [RavenClient setSharedClient:client];
+    SentryClient *client = [SentryClient clientWithDSN:SENTRY_DSN];
+    [SentryClient setSharedClient:client];
     
 It is important to set the shared client as Corvus uses it to log messages.
     
