@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source   	 = { :git => 'https://github.com/jschmid/Corvus.git', :tag => s.version.to_s }
   s.source_files = '*.{h,m}'
   s.requires_arc = true
-  s.platform = :ios, '7.0'
+  s.platform = :ios, '8.0'
   s.dependency 'CocoaLumberjack/Default', '~> 2.0'
   s.dependency 'SentrySwift', '~> 0.3.3'
 end
