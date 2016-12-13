@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.platform = :ios, '8.0'
   s.dependency 'CocoaLumberjack/Default', '~> 2.0'
-  s.dependency 'SentrySwift', '~> 0.3.3'
+  s.dependency 'SentrySwift', '~> 1.3'
 end
